@@ -136,13 +136,7 @@ double* my_solver(int N, double *A, double* B) {
 	/*   C = B × A × At + Bt × B */
 
 	// R1 = B x A
-
-	//double A[] = {1, 2, 3, 1, 2, 0, 2, 0, 0};
-	//double B[] = {1, 2, 1, 3, 2, 1, 2, 1, 1};
-
-	double *R1 = multiplication_upper(N, B, A);
-
-	//printMatrix(N, R1);
+	double *R1 = multiplication_upper(3, B, A);
 	
 	if (R1 == NULL)
 		return NULL;
@@ -154,7 +148,7 @@ double* my_solver(int N, double *A, double* B) {
 		return NULL;
 
 	// Bt = B transpus
-	double *Bt = transpose_upper(N, B);
+	double *Bt = transposed(N, B);
 
 	if (Bt == NULL)
 		return NULL;
@@ -166,7 +160,7 @@ double* my_solver(int N, double *A, double* B) {
 		return NULL;
 
 	// R3 = Bt x B
-	double *R3 = multiplication_lower(N, B, Bt);
+	double *R3 = multiplication(N, B, Bt);
 
 	if (R3 == NULL)
 		return NULL;
