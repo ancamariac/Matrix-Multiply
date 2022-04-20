@@ -176,6 +176,6 @@ double* my_solver(int N, double *A, double* B) {
 	free(R3);
 	free(At);
 	free(Bt);
-
+	
 	return R4;
 }
