@@ -115,8 +115,8 @@ double *transpose_upper(int N, double *U) {
 		return R;
 
 	for (int i = 0; i < N; i++) {
-		for (int j = i; i < N; j++) {
-			R[i * N + j] = U[j * N + i];
+		for (int j = i; j < N; j++) {
+			R[j * N + i] = U[i * N + j];
 		}
 	}
 
@@ -128,8 +128,9 @@ double* my_solver(int N, double *A, double* B) {
 	/*   C = B × A × At + Bt × B */
 
 	// R1 = B x A
-	double *R1 = multiplication_upper(N, B, A);
 
+	double *R1 = multiplication_upper(N, B, A);
+	
 	if (R1 == NULL)
 		return NULL;
 
@@ -159,6 +160,7 @@ double* my_solver(int N, double *A, double* B) {
 
 	// R4 = R2 + R3 -> R4 = B × A × At + Bt × B 
 	double *R4 = addition(N, R2, R3);
+	printf("hei555");
 
 	if (R4 == NULL)
 		return NULL;
@@ -166,9 +168,8 @@ double* my_solver(int N, double *A, double* B) {
 	free(R1);
 	free(R2);
 	free(R3);
-	free(R4);
 	free(At);
-	free(Bt);	
+	free(Bt);
 
 	return R4;
 }
