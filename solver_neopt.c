@@ -15,6 +15,10 @@ double *transposed(int N, double *A) {
 	
 	double *R = (double*)calloc(N * N, sizeof(double));
 
+	// check memory allocation
+	if (R == NULL)
+		return NULL;
+
 	for (int i = 0; i < N; i++) {
 		for (int j = 0; j < N; j++) {
 			R[j * N + i] = A[i * N + j];
@@ -126,20 +130,38 @@ double* my_solver(int N, double *A, double* B) {
 	// R1 = B x A
 	double *R1 = multiplication_upper(N, B, A);
 
+	if (R1 == NULL)
+		return NULL;
+
 	// At = A transpus
 	double *At = transpose_upper(N, A);
+
+	if (At == NULL)
+		return NULL;
 
 	// Bt = B transpus
 	double *Bt = transpose_upper(N, B);
 
+	if (Bt == NULL)
+		return NULL;
+
 	// R2 = R1 * At -> R2 = B x A x At
 	double *R2 = multiplication_lower(N, R1, At);
+
+	if (R2 == NULL)
+		return NULL;
 
 	// R3 = Bt x B
 	double *R3 = multiplication_lower(N, B, Bt);
 
+	if (R3 == NULL)
+		return NULL;
+
 	// R4 = R2 + R3 -> R4 = B × A × At + Bt × B 
 	double *R4 = addition(N, R2, R3);
+
+	if (R4 == NULL)
+		return NULL;
 	
 	free(R1);
 	free(R2);
