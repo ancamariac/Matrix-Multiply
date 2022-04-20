@@ -137,45 +137,44 @@ int main() {
 
 	// R1 = B x A
 
-	double A[] = {5, 1, 1, 0, 4, 2, 0, 0, 2};
-	double B[] = {1, 2, 1, 3, 2, 1, 2, 1, 1};
+	double A[] = {1, 2, 1, 0, 1, 3, 0, 0, 1};
+	double B[] = {1, 2, 1, 2, 3, 1, 2, 1, 1};
 
 	double *R1 = multiplication_upper(3, B, A);
-	
+	//printMatrix(3, R1);
 	//if (R1 == NULL)
 	//	return NULL;
 
 	// At = A transpus
 	double *At = transpose_upper(3, A);
-
+	//printMatrix(3, At);
 	//if (At == NULL)
 	//	return NULL;
 
 	// Bt = B transpus
-	double *Bt = transpose_upper(3, B);
-
+	double *Bt = transposed(3, B);
+	//printMatrix(3, Bt); printf("\n");
 	if (Bt == NULL)
 		return NULL;
 
 	// R2 = R1 * At -> R2 = B x A x At
     
 	double *R2 = multiplication_lower(3, R1, At);
-    printMatrix(3, R2);
-    printf("\n");
-    
-
+	//printMatrix(3, R2);
 	/*if (R2 == NULL)
-		return NULL;
+		return NULL;*/
 
 	// R3 = Bt x B
-	double *R3 = multiplication_lower(N, B, Bt);
+	double *R3 = multiplication(3, Bt, B);
+	printMatrix(3, R2); printf("\n");
+	printMatrix(3, R3); printf("\n");
 
-	if (R3 == NULL)
-		return NULL;
+	//if (R3 == NULL)
+		//return NULL;
 
 	// R4 = R2 + R3 -> R4 = B × A × At + Bt × B 
-	double *R4 = addition(N, R2, R3);
-	printf("hei555");
+	double *R4 = addition(3, R2, R3);
+printMatrix(3, R4); printf("\n");
 
 	if (R4 == NULL)
 		return NULL;
@@ -184,7 +183,7 @@ int main() {
 	free(R2);
 	free(R3);
 	free(At);
-	free(Bt);*/
+	free(Bt);
 
 	return 0;
 }

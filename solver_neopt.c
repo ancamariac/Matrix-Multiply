@@ -136,7 +136,7 @@ double* my_solver(int N, double *A, double* B) {
 	/*   C = B × A × At + Bt × B */
 
 	// R1 = B x A
-	double *R1 = multiplication_upper(3, B, A);
+	double *R1 = multiplication_upper(N, B, A);
 	
 	if (R1 == NULL)
 		return NULL;
@@ -160,7 +160,7 @@ double* my_solver(int N, double *A, double* B) {
 		return NULL;
 
 	// R3 = Bt x B
-	double *R3 = multiplication(N, B, Bt);
+	double *R3 = multiplication(N, Bt, B);
 
 	if (R3 == NULL)
 		return NULL;
