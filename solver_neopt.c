@@ -131,18 +131,18 @@ void printMatrix(int N, double *M) {
 
 }
 
-double* my_solver(int N, double *C, double* D) {
+double* my_solver(int N, double *A, double* B) {
 	
 	/*   C = B × A × At + Bt × B */
 
 	// R1 = B x A
 
-	double A[] = {1, 2, 3, 1, 2, 0, 2, 0, 0};
-	double B[] = {1, 2, 1, 3, 2, 1, 2, 1, 1};
+	//double A[] = {1, 2, 3, 1, 2, 0, 2, 0, 0};
+	//double B[] = {1, 2, 1, 3, 2, 1, 2, 1, 1};
 
-	double *R1 = multiplication_upper(3, B, A);
+	double *R1 = multiplication_upper(N, B, A);
 
-	printMatrix(N, R1);
+	//printMatrix(N, R1);
 	
 	if (R1 == NULL)
 		return NULL;
