@@ -123,15 +123,30 @@ double *transpose_upper(int N, double *U) {
 	return R;
 }
 
-double* my_solver(int N, double *A, double* B) {
+void printMatrix(int N, double *M) {
+	int columns;
+
+    for(columns=0; columns<N; columns++)
+    {
+         printf("%f ", M[columns]);
+   }
+
+}
+
+double* my_solver(int N, double *C, double* D) {
 	
 	/*   C = B × A × At + Bt × B */
 
 	// R1 = B x A
 
-	double *R1 = multiplication_upper(N, B, A);
+	double A[] = {1, 2, 3, 1, 2, 0, 2, 0, 0};
+	double B[] = {1, 2, 1, 3, 2, 1, 2, 1, 1};
+
+	double *R1 = multiplication_upper(3, B, A);
+
+	printMatrix(N, R1);
 	
-	if (R1 == NULL)
+/*	if (R1 == NULL)
 		return NULL;
 
 	// At = A transpus
@@ -169,7 +184,7 @@ double* my_solver(int N, double *A, double* B) {
 	free(R2);
 	free(R3);
 	free(At);
-	free(Bt);
+	free(Bt);*/
 
-	return R4;
+	return R1;
 }
