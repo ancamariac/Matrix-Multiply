@@ -123,10 +123,6 @@ double* my_solver(int N, double *A, double* B) {
 	
 	/*   C = B × A × At + Bt × B */
 
-	// check memory allocation
-	if (R == NULL)
-		return R;
-
 	// R1 = B x A
 	double *R1 = multiplication_upper(N, B, A);
 
@@ -144,6 +140,13 @@ double* my_solver(int N, double *A, double* B) {
 
 	// R4 = R2 + R3 -> R4 = B × A × At + Bt × B 
 	double *R4 = addition(N, R2, R3);
+	
+	free(R1);
+	free(R2);
+	free(R3);
+	free(R4);
+	free(At);
+	free(Bt);	
 
 	return R4;
 }
