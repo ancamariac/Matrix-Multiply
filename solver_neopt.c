@@ -50,6 +50,7 @@ double *addition(int N, double *A, double *B) {
 double *multiplication(int N, double *A, double *B) {
 
 	double *R = (double*)calloc(N * N, sizeof(double));
+	double *At = (double*)calloc(N * N, sizeof(double));
 
     // check memory allocation
 	if (R == NULL)
@@ -57,8 +58,9 @@ double *multiplication(int N, double *A, double *B) {
 
 	for (int i = 0; i < N; i++) {
 		for (int j = 0; j < N; j++) {
+			At[j * N + i] = A[i * N + j];
 			for (int k = 0; k < N; k++) {
-				R[i * N + j] += A[i * N + k] * B[k * N + j];
+				R[i * N + j] += At[i * N + k] * B[k * N + j];
 			}
 		}
 	}
@@ -90,15 +92,19 @@ double *multiplication_upper(int N, double *A, double *U) {
 double *multiplication_lower(int N, double *A, double *L) {
 
 	double *R = (double*)calloc(N * N, sizeof(double));
+	double *Lt = (double*)calloc(N * N, sizeof(double));
+
 
 	// check memory allocation
 	if (R == NULL)
 		return R;
 
 	for (int i = 0; i < N; i++) {
-		for (int j = 0; j < N; j++) {
+		for (int j = i; j < N; j++) {
+			// compute the transposed of L
+			Lt[j * N + i] = L[i * N + j];
 			for (int k = j; k < N; k++) {
-				R[i * N + j] += A[i * N + k] * L[k * N + j];
+				R[i * N + j] += A[i * N + k] * Lt[k * N + j];
 			}
 		}
 	}
@@ -142,7 +148,7 @@ double* my_solver(int N, double *A, double* B) {
 		return NULL;
 
 	// At = A transpus
-	double *At = transpose_upper(N, A);
+	/*double *At = transpose_upper(N, A);
 
 	if (At == NULL)
 		return NULL;
@@ -151,16 +157,16 @@ double* my_solver(int N, double *A, double* B) {
 	double *Bt = transposed(N, B);
 
 	if (Bt == NULL)
-		return NULL;
+		return NULL;*/
 
 	// R2 = R1 * At -> R2 = B x A x At
-	double *R2 = multiplication_lower(N, R1, At);
+	double *R2 = multiplication_lower(N, R1, A);
 
 	if (R2 == NULL)
 		return NULL;
 
 	// R3 = Bt x B
-	double *R3 = multiplication(N, Bt, B);
+	double *R3 = multiplication(N, B, B);
 
 	if (R3 == NULL)
 		return NULL;
@@ -174,8 +180,8 @@ double* my_solver(int N, double *A, double* B) {
 	free(R1);
 	free(R2);
 	free(R3);
-	free(At);
-	free(Bt);
+	//free(At);
+	//free(Bt);
 	
 	return R4;
 }
