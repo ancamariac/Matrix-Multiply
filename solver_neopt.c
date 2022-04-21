@@ -58,9 +58,9 @@ double *multiplication(int N, double *A, double *B) {
 
 	for (int i = 0; i < N; i++) {
 		for (int j = 0; j < N; j++) {
-			At[j * N + i] = A[i * N + j];
+			//At[j * N + i] = A[i * N + j];
 			for (int k = 0; k < N; k++) {
-				R[i * N + j] += At[i * N + k] * B[k * N + j];
+				R[i * N + j] += A[i * N + k] * B[k * N + j];
 			}
 		}
 	}
@@ -102,9 +102,9 @@ double *multiplication_lower(int N, double *A, double *L) {
 	for (int i = 0; i < N; i++) {
 		for (int j = i; j < N; j++) {
 			// compute the transposed of L
-			Lt[j * N + i] = L[i * N + j];
+			//Lt[j * N + i] = L[i * N + j];
 			for (int k = j; k < N; k++) {
-				R[i * N + j] += A[i * N + k] * Lt[k * N + j];
+				R[i * N + j] += A[i * N + k] * L[k * N + j];
 			}
 		}
 	}
