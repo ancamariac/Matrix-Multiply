@@ -10,7 +10,6 @@
  */
 /*   C = B × A × At + Bt × B
 */
-
 /* R = At */
 double *transposed(int N, double *A) {
 	
@@ -28,8 +27,6 @@ double *transposed(int N, double *A) {
 
 	return R; 
 }
-
-
 
 /* R = A + B */
 double *addition(int N, double *A, double *B) {
@@ -49,8 +46,7 @@ double *addition(int N, double *A, double *B) {
 	return R;
 }
 
-/* R = A * B */
-double *multiplication_with_transpose(int N, double *A, double *B) {
+double *multiplication_with_transpose(int N, double *A) {
 
 	double *R = (double*)calloc(N * N, sizeof(double));
 
@@ -61,14 +57,13 @@ double *multiplication_with_transpose(int N, double *A, double *B) {
 	for (register int i = 0; i < N; i++) {
 		for (register int j = 0; j < N; j++) {
 			for (register int k = 0; k < N; k++) {
-				R[i * N + j] += A[i * N + k] * B[j * N + k];
+				R[i * N + j] += A[k * N + j] * A[k * N + i];
 			}
 		}
 	}
 
 	return R;
 }
-
 /* UPPER TRIANGULAR MATRIX FUNCTIONS */
 
 double *multiplication_upper(int N, double *A, double *U) {
@@ -159,7 +154,7 @@ double* my_solver(int N, double *A, double* B) {
 		return NULL;
 
 	// R3 = Bt x B
-	double *R3 = multiplication_with_transpose(N, B, B);
+	double *R3 = multiplication_with_transpose(N, B);
 
 	if (R3 == NULL)
 		return NULL;
