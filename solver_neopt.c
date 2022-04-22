@@ -10,23 +10,6 @@
  */
 /*   C = B × A × At + Bt × B
 */
-/* R = At */
-double *transposed(int N, double *A) {
-	
-	double *R = (double*)calloc(N * N, sizeof(double));
-
-	// check memory allocation
-	if (R == NULL)
-		return NULL;
-
-	for (int i = 0; i < N; i++) {
-		for (int j = 0; j < N; j++) {
-			R[j * N + i] = A[i * N + j];
-		}
-	}
-
-	return R; 
-}
 
 /* R = A + B */
 double *addition(int N, double *A, double *B) {
@@ -85,10 +68,22 @@ double *multiplication_upper(int N, double *A, double *U) {
 	return R;
 }
 
-// L = A transposed
 double *multiplication_lower(int N, double *A, double *L) {
 
 	double *R = (double*)calloc(N * N, sizeof(double));
+
+	// Lt = L transpus
+	double *Lt = (double*)calloc(N * N, sizeof(double));
+
+	if (Lt == NULL)
+		return NULL;
+
+	// transpose for upper tr matrix
+	for (int i = 0; i < N; i++) {
+		for (int j = i; j < N; j++) {
+			Lt[j * N + i] = L[i * N + j];
+		}
+	}
 
 	// check memory allocation
 	if (R == NULL)
@@ -97,25 +92,8 @@ double *multiplication_lower(int N, double *A, double *L) {
 	for (int i = 0; i < N; i++) {
 		for (int j = 0; j < N; j++) {
 			for (int k = j; k < N; k++) {
-				R[i * N + j] += A[i * N + k] * L[k * N + j];
+				R[i * N + j] += A[i * N + k] * Lt[k * N + j];
 			}
-		}
-	}
-
-	return R;
-}
-
-double *transpose_upper(int N, double *U) {
-
-	double *R = (double*)calloc(N * N, sizeof(double));
-
-	// check memory allocation
-	if (R == NULL)
-		return R;
-
-	for (int i = 0; i < N; i++) {
-		for (int j = i; j < N; j++) {
-			R[j * N + i] = U[i * N + j];
 		}
 	}
 
@@ -132,20 +110,8 @@ double* my_solver(int N, double *A, double* B) {
 	if (R1 == NULL)
 		return NULL;
 
-	// At = A transpus
-	double *At = (double*)calloc(N * N, sizeof(double));
-
-	if (At == NULL)
-		return NULL;
-
-	for (int i = 0; i < N; i++) {
-		for (int j = i; j < N; j++) {
-			At[j * N + i] = A[i * N + j];
-		}
-	}
-
 	// R2 = R1 * At -> R2 = B x A x At
-	double *R2 = multiplication_lower(N, R1, At);
+	double *R2 = multiplication_lower(N, R1, A);
 
 	if (R2 == NULL)
 		return NULL;
@@ -165,8 +131,6 @@ double* my_solver(int N, double *A, double* B) {
 	free(R1);
 	free(R2);
 	free(R3);
-	
-	free(At);
 	
 	return R4;
 }
