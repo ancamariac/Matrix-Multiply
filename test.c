@@ -3,7 +3,7 @@
  * 2022 Spring
  */
 #include "utils.h"
-
+#define MIN(X, Y) (((X) < (Y)) ? (X) : (Y))
 /*
  * Add your unoptimized implementation here
  */
@@ -19,8 +19,8 @@ double *transposed(int N, double *A) {
 	if (R == NULL)
 		return NULL;
 
-	for (int i = 0; i < N; i++) {
-		for (int j = 0; j < N; j++) {
+	for (register int i = 0; i < N; i++) {
+		for (register int j = 0; j < N; j++) {
 			R[j * N + i] = A[i * N + j];
 		}
 	}
@@ -37,8 +37,8 @@ double *addition(int N, double *A, double *B) {
 	if (R == NULL)
 		return NULL;
 
-	for (int i = 0; i < N; i++) {
-		for (int j = 0; j < N; j++) {
+	for (register int i = 0; i < N; i++) {
+		for (register int j = 0; j < N; j++) {
 			R[i * N + j] += A[i * N + j] + B[i * N + j]; 
 		}
 	}
@@ -46,27 +46,44 @@ double *addition(int N, double *A, double *B) {
 	return R;
 }
 
-/* R = A * B */
-double *multiplication(int N, double *A, double *B) {
+double *multiplication_with_first_transpose(int N, double *A) {
 
 	double *R = (double*)calloc(N * N, sizeof(double));
-	double *At = (double*)calloc(N * N, sizeof(double));
 
     // check memory allocation
 	if (R == NULL)
 		return NULL;
 
-	for (int i = 0; i < N; i++) {
-		for (int j = 0; j < N; j++) {
-			//At[j * N + i] = A[i * N + j];
-			for (int k = 0; k < N; k++) {
-				R[i * N + j] += A[i * N + k] * B[k * N + j];
+	for (register int i = 0; i < N; i++) {
+		for (register int j = 0; j < N; j++) {
+			for (register int k = 0; k < N; k++) {
+				R[i * N + j] += A[k * N + j] * A[k * N + i];
 			}
 		}
 	}
 
 	return R;
 }
+
+double *multiplication_with_second_transpose(int N, double *A) {
+
+	double *R = (double*)calloc(N * N, sizeof(double));
+
+    // check memory allocation
+	if (R == NULL)
+		return NULL;
+
+	for (register int i = 0; i < N; i++) {
+		for (register int j = 0; j < N; j++) {
+			for (register int k = 0; k < N; k++) {
+				R[i * N + j] += A[k * N + i] * A[k * N + j];
+			}
+		}
+	}
+
+	return R;
+}
+
 
 /* UPPER TRIANGULAR MATRIX FUNCTIONS */
 
@@ -78,9 +95,9 @@ double *multiplication_upper(int N, double *A, double *U) {
 	if (R == NULL)
 		return R;
 
-	for (int i = 0; i < N; i++) {
-		for (int j = 0; j < N; j++) {
-			for (int k = 0; k < j + 1; k++) {
+	for (register int i = 0; i < N; i++) {
+		for (register int j = 0; j < N; j++) {
+			for (register int k = 0; k < j + 1; k++) {
 				R[i * N + j] += A[i * N + k] * U[k * N + j];
 			}
 		}
@@ -89,26 +106,25 @@ double *multiplication_upper(int N, double *A, double *U) {
 	return R;
 }
 
+// L = A transposed
 double *multiplication_lower(int N, double *A, double *L) {
 
 	double *R = (double*)calloc(N * N, sizeof(double));
 	double *Lt = (double*)calloc(N * N, sizeof(double));
 
-
 	// check memory allocation
 	if (R == NULL)
 		return R;
 
-	for (int i = 0; i < N; i++) {
-		for (int j = i; j < N; j++) {
-			// compute the transposed of L
-			//Lt[j * N + i] = L[i * N + j];
-			for (int k = j; k < N; k++) {
+	for (register int i = 0; i < N; i++) {
+		for (register int j = 0; j < N; j++) {
+			for (register int k = 0; k < N; k++) {
+				
 				R[i * N + j] += A[i * N + k] * L[k * N + j];
 			}
 		}
 	}
-
+	//printMatrix(3, Lt);
 	return R;
 }
 
@@ -120,8 +136,8 @@ double *transpose_upper(int N, double *U) {
 	if (R == NULL)
 		return R;
 
-	for (int i = 0; i < N; i++) {
-		for (int j = i; j < N; j++) {
+	for (register int i = 0; i < N; i++) {
+		for (register int j = i; j < N; j++) {
 			R[j * N + i] = U[i * N + j];
 		}
 	}
@@ -136,6 +152,25 @@ void printMatrix(int N, double *M) {
     }
 
 }
+/* R = A * B */
+double *multiplication(int N, double *A, double *B) {
+
+	double *R = (double*)calloc(N * N, sizeof(double));
+
+    // check memory allocation
+	if (R == NULL)
+		return NULL;
+
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < N; j++) {
+			for (int k = 0; k < N; k++) {
+				R[i * N + j] += A[i * N + k] * B[k * N + j];
+			}
+		}
+	}
+
+	return R;
+}
 
 int main() {
 	
@@ -147,7 +182,7 @@ int main() {
 	double B[] = {1, 2, 1, 2, 3, 1, 2, 1, 1};
 
 	double *R1 = multiplication_upper(3, B, A);
-	printMatrix(3, R1);
+	//printMatrix(3, R1);
 	//if (R1 == NULL)
 	//	return NULL;
 
@@ -158,10 +193,10 @@ int main() {
 	//	return NULL;
 
 	// Bt = B transpus
-	double *Bt = transposed(3, B);
+	/*double *Bt = transposed(3, B);
 	//printMatrix(3, Bt); printf("\n");
 	if (Bt == NULL)
-		return NULL;
+		return NULL;*/
 
 	// R2 = R1 * At -> R2 = B x A x At
     
@@ -171,25 +206,26 @@ int main() {
 		return NULL;*/
 
 	// R3 = Bt x B
-	double *R3 = multiplication(3, Bt, B);
-	//printMatrix(3, R2); printf("\n");
+	double *R3 = multiplication_with_first_transpose(3, B);
+	printMatrix(3, R3);
+	//printMatrix(3, R3); printf("\n");
 	//printMatrix(3, R3); printf("\n");
 
 	//if (R3 == NULL)
 		//return NULL;
 
 	// R4 = R2 + R3 -> R4 = B × A × At + Bt × B 
-	double *R4 = addition(3, R2, R3);
+	//double *R4 = addition(3, R2, R3);
 	//printMatrix(3, R4); printf("\n");
 
-	if (R4 == NULL)
-		return NULL;
+	//if (R4 == NULL)
+		//return NULL;
 	
 	free(R1);
-	free(R2);
-	free(R3);
-	free(At);
-	free(Bt);
+	//free(R2);
+	//free(R3);
+	//free(At);
+	//free(Bt);
 
 	return 0;
 }

@@ -29,6 +29,8 @@ double *transposed(int N, double *A) {
 	return R; 
 }
 
+
+
 /* R = A + B */
 double *addition(int N, double *A, double *B) {
 
@@ -48,7 +50,7 @@ double *addition(int N, double *A, double *B) {
 }
 
 /* R = A * B */
-double *multiplication(int N, double *A, double *B) {
+double *multiplication_with_transpose(int N, double *A, double *B) {
 
 	double *R = (double*)calloc(N * N, sizeof(double));
 
@@ -59,7 +61,7 @@ double *multiplication(int N, double *A, double *B) {
 	for (register int i = 0; i < N; i++) {
 		for (register int j = 0; j < N; j++) {
 			for (register int k = 0; k < N; k++) {
-				R[i * N + j] += A[i * N + k] * B[k * N + j];
+				R[i * N + j] += A[i * N + k] * B[j * N + k];
 			}
 		}
 	}
@@ -143,26 +145,21 @@ double* my_solver(int N, double *A, double* B) {
 	if (R1 == NULL)
 		return NULL;
 
-	/*// At = A transpus
+	// At = A transpus
 	double *At = transpose_upper(N, A);
 
 	if (At == NULL)
 		return NULL;
-*/
-	// Bt = B transpus
-	double *Bt = transposed(N, B);
 
-	if (Bt == NULL)
-		return NULL;
 
 	// R2 = R1 * At -> R2 = B x A x At
-	double *R2 = multiplication_lower(N, R1, A);
+	double *R2 = multiplication_lower(N, R1, At);
 
 	if (R2 == NULL)
 		return NULL;
 
 	// R3 = Bt x B
-	double *R3 = multiplication(N, Bt, B);
+	double *R3 = multiplication_with_transpose(N, B, B);
 
 	if (R3 == NULL)
 		return NULL;
@@ -176,8 +173,8 @@ double* my_solver(int N, double *A, double* B) {
 	free(R1);
 	free(R2);
 	free(R3);
-	//free(At);
-	//free(Bt);
+	free(R4);
+	free(At);
 	
 	return R4;
 }
