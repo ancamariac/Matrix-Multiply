@@ -50,6 +50,7 @@ double *addition(int N, double *A, double *B) {
 double *multiplication(int N, double *A, double *B) {
 
 	double *R = (double*)calloc(N * N, sizeof(double));
+	double *At = (double*)calloc(N * N, sizeof(double));
 
     // check memory allocation
 	if (R == NULL)
@@ -57,6 +58,7 @@ double *multiplication(int N, double *A, double *B) {
 
 	for (int i = 0; i < N; i++) {
 		for (int j = 0; j < N; j++) {
+			//At[j * N + i] = A[i * N + j];
 			for (int k = 0; k < N; k++) {
 				R[i * N + j] += A[i * N + k] * B[k * N + j];
 			}
@@ -90,13 +92,17 @@ double *multiplication_upper(int N, double *A, double *U) {
 double *multiplication_lower(int N, double *A, double *L) {
 
 	double *R = (double*)calloc(N * N, sizeof(double));
+	double *Lt = (double*)calloc(N * N, sizeof(double));
+
 
 	// check memory allocation
 	if (R == NULL)
 		return R;
 
 	for (int i = 0; i < N; i++) {
-		for (int j = 0; j < N; j++) {
+		for (int j = i; j < N; j++) {
+			// compute the transposed of L
+			//Lt[j * N + i] = L[i * N + j];
 			for (int k = j; k < N; k++) {
 				R[i * N + j] += A[i * N + k] * L[k * N + j];
 			}
@@ -141,7 +147,7 @@ int main() {
 	double B[] = {1, 2, 1, 2, 3, 1, 2, 1, 1};
 
 	double *R1 = multiplication_upper(3, B, A);
-	//printMatrix(3, R1);
+	printMatrix(3, R1);
 	//if (R1 == NULL)
 	//	return NULL;
 
@@ -166,15 +172,15 @@ int main() {
 
 	// R3 = Bt x B
 	double *R3 = multiplication(3, Bt, B);
-	printMatrix(3, R2); printf("\n");
-	printMatrix(3, R3); printf("\n");
+	//printMatrix(3, R2); printf("\n");
+	//printMatrix(3, R3); printf("\n");
 
 	//if (R3 == NULL)
 		//return NULL;
 
 	// R4 = R2 + R3 -> R4 = B × A × At + Bt × B 
 	double *R4 = addition(3, R2, R3);
-printMatrix(3, R4); printf("\n");
+	//printMatrix(3, R4); printf("\n");
 
 	if (R4 == NULL)
 		return NULL;
