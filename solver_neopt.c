@@ -57,7 +57,7 @@ double *multiplication_with_transpose(int N, double *A) {
 	for (register int i = 0; i < N; i++) {
 		for (register int j = 0; j < N; j++) {
 			for (register int k = 0; k < N; k++) {
-				R[i * N + j] += A[k * N + j] * A[k * N + i];
+				R[i * N + j] += A[k * N + i] * A[k * N + j];
 			}
 		}
 	}
@@ -96,8 +96,8 @@ double *multiplication_lower(int N, double *A, double *L) {
 
 	for (register int i = 0; i < N; i++) {
 		for (register int j = 0; j < N; j++) {
-			for (register int k = 0; k < MIN(i, j); k++) {
-				R[i * N + j] += A[k * N + i] * L[k * N + j];
+			for (register int k = j; k < N; k++) {
+				R[i * N + j] += A[i * N + k] * L[k * N + j];
 			}
 		}
 	}
@@ -168,7 +168,7 @@ double* my_solver(int N, double *A, double* B) {
 	free(R1);
 	free(R2);
 	free(R3);
-	free(R4);
+	
 	free(At);
 	
 	return R4;
