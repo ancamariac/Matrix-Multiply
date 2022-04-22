@@ -19,8 +19,8 @@ double *transposed(int N, double *A) {
 	if (R == NULL)
 		return NULL;
 
-	for (int i = 0; i < N; i++) {
-		for (int j = 0; j < N; j++) {
+	for (register int i = 0; i < N; i++) {
+		for (register int j = 0; j < N; j++) {
 			R[j * N + i] = A[i * N + j];
 		}
 	}
@@ -37,8 +37,8 @@ double *addition(int N, double *A, double *B) {
 	if (R == NULL)
 		return NULL;
 
-	for (int i = 0; i < N; i++) {
-		for (int j = 0; j < N; j++) {
+	for (register int i = 0; i < N; i++) {
+		for (register int j = 0; j < N; j++) {
 			R[i * N + j] += A[i * N + j] + B[i * N + j]; 
 		}
 	}
@@ -55,9 +55,9 @@ double *multiplication(int N, double *A, double *B) {
 	if (R == NULL)
 		return NULL;
 
-	for (int i = 0; i < N; i++) {
-		for (int j = 0; j < N; j++) {
-			for (int k = 0; k < N; k++) {
+	for (register int i = 0; i < N; i++) {
+		for (register int j = 0; j < N; j++) {
+			for (register int k = 0; k < N; k++) {
 				R[i * N + j] += A[i * N + k] * B[k * N + j];
 			}
 		}
@@ -76,9 +76,9 @@ double *multiplication_upper(int N, double *A, double *U) {
 	if (R == NULL)
 		return R;
 
-	for (int i = 0; i < N; i++) {
-		for (int j = 0; j < N; j++) {
-			for (int k = 0; k < j + 1; k++) {
+	for (register int i = 0; i < N; i++) {
+		for (register int j = 0; j < N; j++) {
+			for (register int k = 0; k < j + 1; k++) {
 				R[i * N + j] += A[i * N + k] * U[k * N + j];
 			}
 		}
@@ -95,9 +95,9 @@ double *multiplication_lower(int N, double *A, double *L) {
 	if (R == NULL)
 		return R;
 
-	for (int i = 0; i < N; i++) {
-		for (int j = 0; j < N; j++) {
-			for (int k = j; k < N; k++) {
+	for (register int i = 0; i < N; i++) {
+		for (register int j = 0; j < N; j++) {
+			for (register int k = j; k < N; k++) {
 				R[i * N + j] += A[i * N + k] * L[k * N + j];
 			}
 		}
@@ -114,8 +114,8 @@ double *transpose_upper(int N, double *U) {
 	if (R == NULL)
 		return R;
 
-	for (int i = 0; i < N; i++) {
-		for (int j = i; j < N; j++) {
+	for (register int i = 0; i < N; i++) {
+		for (register int j = i; j < N; j++) {
 			R[j * N + i] = U[i * N + j];
 		}
 	}
