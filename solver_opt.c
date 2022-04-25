@@ -15,18 +15,15 @@
 /* R = A + B */
 double *addition(int N, double *A, double *B) {
 
-	int i = 0, j = 0;
+	int i = 0;
 	double *R = (double*)malloc(N * N * sizeof(double));
 
 	// check memory allocation
 	if (R == NULL)
 		return NULL;
-
-	for (i = 0; i < N; i++) {
-		for (j = 0; j < N; j++) {
-
-			R[i * N + j] = A[i * N + j] + B[i * N + j]; 
-		}
+	int N2 = N * N;
+	for (i = 0; i < N2; i++) {
+		R[i] = A[i] + B[i];
 	}
 
 	return R;
@@ -46,7 +43,7 @@ double *multiplication(int N, double *A, double *B) {
 
 		register double *orig_a = A + i * N;
 		register double *result = R + i * N; 
-
+		
 		for (k = 0; k < N; k++) {
 
 			register double *pa = orig_a + k; 
@@ -57,6 +54,7 @@ double *multiplication(int N, double *A, double *B) {
 			}
 		}
 	}
+	
 
 	return R;
 }
@@ -72,8 +70,8 @@ double *upper_X_lower(int N, double *A) {
 		return NULL;
 
 	for (i = 0; i < N; i++) {
-
-		register double *orig_pa = A + i * N;
+		register int iN = i * N;
+		register double *orig_pa = A + iN;
 
 		for (j = 0; j < N; j++) {
 
@@ -82,7 +80,7 @@ double *upper_X_lower(int N, double *A) {
 			register double *pa = orig_pa + max;
 			register double *pb = A + j * N + max;
 
-			for (k = MAX(i, j); k < N; k++) {
+			for (k = max; k < N; k++) { 
 
 				res += *pa * *pb;
 				pa++;
@@ -90,7 +88,7 @@ double *upper_X_lower(int N, double *A) {
 
 			}
 
-			R[i * N + j] = res;
+			R[iN + j] = res;
 		}
 	}
 
@@ -109,6 +107,7 @@ double *multiplication_with_transpose(int N, double *A) {
 	for (i = 0; i < N; i++) {
 
 		register double *orig_pa = A + i;
+		register int iN = i * N;
 
 		for (j = 0; j < N; j++) {
 
@@ -122,8 +121,8 @@ double *multiplication_with_transpose(int N, double *A) {
 				pb += N;
 				//R[i * N + j] += A[k * N + i] * A[k * N + j];
 			}
-
-			R[i * N + j] = res;
+			
+			R[iN + j] = res;
 		}
 	}
 
