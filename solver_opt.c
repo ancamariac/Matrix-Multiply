@@ -13,7 +13,7 @@
 double *addition(int N, double *A, double *B) {
 
 	int i = 0, j = 0;
-	double *R = (double*)malloc(N * N, sizeof(double));
+	double *R = (double*)malloc(N * N * sizeof(double));
 
 	// check memory allocation
 	if (R == NULL)
@@ -31,9 +31,9 @@ double *addition(int N, double *A, double *B) {
 double *multiplication(int N, double *A, double *B) {
 
     int i = 0, j = 0, k = 0;
-    double *R = (double *)malloc(N * N, sizeof(double));
+    double *R = (double *)malloc(N * N * sizeof(double));
 
-	if (result == NULL) {
+	if (R == NULL) {
 		return NULL;
 	}
 
