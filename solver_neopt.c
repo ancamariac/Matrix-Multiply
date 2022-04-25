@@ -9,6 +9,8 @@
  */
 /*   C = B × A × At + Bt × B   */
 
+#define MAX(A, B) ((A) > (B) ? (A) : (B))
+
 /* R = A + B */
 double *addition(int N, double *A, double *B) {
 
@@ -60,7 +62,7 @@ double *upper_X_lower(int N, double *A) {
 
 	for (i = 0; i < N; i++) {
 		for (j = 0; j < N; j++) {
-			for (k = j; k < N; k++) {
+			for (k = MAX(i, j); k < N; k++) {
 				R[i * N + j] += A[i * N + k] * A[j * N + k];
 			}
 		}
