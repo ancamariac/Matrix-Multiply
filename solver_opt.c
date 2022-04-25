@@ -12,17 +12,15 @@
 /* R = A + B */
 double *addition(int N, double *A, double *B) {
 
-	double *R = (double*)malloc(N * N, sizeof(double));
+	double *R = (double*)malloc(N * N * sizeof(double));
 
 	// check memory allocation
 	if (R == NULL)
 		return NULL;
 
 	for (int i = 0; i < N; i++) {
-		register double res = 0;
 		for (int j = 0; j < N; j++) {
-			res += A[i * N + j] + B[i * N + j]; 
-			R[i * N + j] = res;
+			R[i * N + j] = A[i * N + j] + B[i * N + j];
 		}
 	}
 
@@ -32,17 +30,27 @@ double *addition(int N, double *A, double *B) {
 /* R = At * A */
 double *multiplication_with_transpose(int N, double *A) {
 
-	double *R = (double*)calloc(N * N, sizeof(double));
+	double *R = (double*)malloc(N * N * sizeof(double));
 
     // check memory allocation
 	if (R == NULL)
 		return NULL;
 
 	for (int i = 0; i < N; i++) {
+		register double *orig_pa = &A[i * N];
 		for (int j = 0; j < N; j++) {
+
+			register double *pa = orig_pa;
+			register double *pb = &A[j];
+			register double res = 0.0;
+
 			for (int k = 0; k < N; k++) {
-				R[i * N + j] += A[k * N + i] * A[k * N + j];
+				//res += A[k * N + i] * A[k * N + j];
+				res += *pa * *pb;
+				pa++;
+				pb += N;
 			}
+			R[i * N + j] = res;
 		}
 	}
 

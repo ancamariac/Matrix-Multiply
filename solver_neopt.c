@@ -38,8 +38,8 @@ double *multiplication_with_transpose(int N, double *A) {
 
 	for (int i = 0; i < N; i++) {
 		for (int j = 0; j < N; j++) {
-			for (int k = 0; k < N; k++) {
-				R[i * N + j] += A[k * N + i] * A[k * N + j];
+			for (int k = 0; k < i + 1; k++) {
+				R[i * N + j] += A[i * N + k] * A[k * N + j];
 			}
 		}
 	}
