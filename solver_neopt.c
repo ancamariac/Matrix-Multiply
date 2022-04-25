@@ -31,7 +31,7 @@ double *addition(int N, double *A, double *B) {
 double *multiplication(int N, double *A, double *B) {
 
     int i = 0, j = 0, k = 0;
-    double *result = (double *) calloc(N * N, sizeof(double));
+    double *result = (double *)calloc(N * N, sizeof(double));
 
 	if (result == NULL) {
 		return NULL;
