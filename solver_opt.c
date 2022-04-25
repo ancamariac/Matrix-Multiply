@@ -59,17 +59,24 @@ double *multiplication(int N, double *A, double *B) {
 double *upper_X_lower(int N, double *A) {
 
 	int i = 0, j = 0, k = 0;
-	double *R = (double*)calloc(N * N, sizeof(double));
+	double *R = (double*)malloc(N * N * sizeof(double));
 
     // check memory allocation
 	if (R == NULL)
 		return NULL;
 
 	for (i = 0; i < N; i++) {
+		register double *orig_pa = A + i * N;
 		for (j = 0; j < N; j++) {
+			register double *orig_pa_cpy = orig_pa;
+			register double *orig_pb = B + j * N;
+			register double res = 0.0;
 			for (k = j; k < N; k++) {
-				R[i * N + j] += A[i * N + k] * A[j * N + k];
+				res += *orig_pa_cpy * *orig_pb;
+				orig_pa_cpy++;
+				orig_pb++;
 			}
+			R[i * N + j] = res;
 		}
 	}
 
