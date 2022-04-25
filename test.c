@@ -108,19 +108,71 @@ void printMatrix(int N, double *M) {
 
 }
 /* R = A * B */
+
+//sum += B[i * N + k] * At[k * N + j];
+
+/*	for (i = 0; i < N; i++) {
+		register double *orig_B = &B[i * N];
+		register double *orig_fst = &fst[i * N]; 
+		for (k = 0; k < N; k++) {
+			register double idxB = orig_B[k];
+			register double *orig_At = &At[k * N];
+			for (j = 0; j <= k; j++) {
+				orig_fst[j] += idxB * orig_At[j];
+			}
+		}
+	}
+*/
 double *multiplication(int N, double *A, double *B) {
 
-	double *R = (double*)calloc(N * N, sizeof(double));
+	int i = 0, j = 0, k = 0;
+    double *R = (double *)calloc(N * N, sizeof(double));
 
-    // check memory allocation
-	if (R == NULL)
+	// check memory allocation
+	if (R == NULL) {
 		return NULL;
+	}
 
-	for (int i = 0; i < N; i++) {
-		for (int j = 0; j < N; j++) {
-			for (int k = 0; k < N; k++) {
-				R[i * N + j] += A[i * N + k] * B[k * N + j];
+	for (i = 0; i < N; i++) {
+
+		register double *orig_a = A + i * N;
+		register double *result = R + i * N; 
+
+		for (k = 0; k < N; k++) {
+
+			register double pa = orig_a[k]; 
+			register double *pb = B + k * N;
+
+			for (j = 0; j < N; j++) {
+				result[j] += pa * pb[j];
 			}
+		}
+	}
+
+	return R;
+}
+
+double *multiply_matrix(int N, double *A, double *B) {
+    int i = 0, j = 0, k = 0;
+    double *R = (double *)malloc(N * N * sizeof(double));
+
+	// check memory allocation
+	if (R == NULL) {
+		return NULL;
+	}
+
+	for (i = 0; i < N; ++i) {
+		register double *orig_pa = A + i * N;
+		for (j = 0; j < N; ++j) {
+			register double res = 0.0;
+			register double *pa = orig_pa;
+			register double *pb = B + j;
+			for (k = 0; k < N; ++k) {
+				res += *pa * *pb;
+				pa++;
+				pb += N;
+			}
+			R[i * N + j] = res;
 		}
 	}
 
@@ -158,10 +210,10 @@ int main() {
 	// At = A transpus
 	double *At = transpose_matrix(3, A);
 
-	double *R1 = multiplication(3, A, At);
+	double *R1 = multiply_matrix(3, A, At);
 	printMatrix(3, R1);
 	printf("\n");
-	double *R2 = multiplication_with_lowertr(3, A, At);
+	double *R2 = multiplication(3, A, At);
 	printMatrix(3, R2);
 	//if (R1 == NULL)
 	//	return NULL;

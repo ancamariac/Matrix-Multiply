@@ -35,6 +35,7 @@ double *multiplication(int N, double *A, double *B) {
     int i = 0, j = 0, k = 0;
     double *result = (double *)calloc(N * N, sizeof(double));
 
+	// check memory allocation
 	if (result == NULL) {
 		return NULL;
 	}
@@ -97,27 +98,15 @@ double *my_solver(int N, double *A, double* B) {
 
 	// R1 = A x At
 	double *R1 = upper_X_lower(N, A);
-	
-	if (R1 == NULL)
-		return NULL;
 
 	// R2 = B * R1 -> R2 = B x A x At
 	double *R2 = multiplication(N, B, R1);
 
-	if (R2 == NULL)
-		return NULL;
-
 	// R3 = Bt x B
 	double *R3 = multiplication_with_transpose(N, B);
 
-	if (R3 == NULL)
-		return NULL;
-
 	// R4 = R2 + R3 -> R4 = B × A × At + Bt × B 
 	double *R4 = addition(N, R2, R3);
-
-	if (R4 == NULL)
-		return NULL;
 	
 	free(R1);
 	free(R2);
