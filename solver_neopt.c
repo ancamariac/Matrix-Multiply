@@ -3,13 +3,11 @@
  * 2022 Spring
  */
 #include "utils.h"
-#define MIN(X, Y) (((X) < (Y)) ? (X) : (Y))
 
 /*
  * Add your unoptimized implementation here
  */
-/*   C = B × A × At + Bt × B
-*/
+/*   C = B × A × At + Bt × B   */
 
 /* R = A + B */
 double *addition(int N, double *A, double *B) {
@@ -29,6 +27,7 @@ double *addition(int N, double *A, double *B) {
 	return R;
 }
 
+/* R = At * A */
 double *multiplication_with_transpose(int N, double *A) {
 
 	double *R = (double*)calloc(N * N, sizeof(double));
@@ -100,7 +99,7 @@ double *multiplication_lower(int N, double *A, double *L) {
 	return R;
 }
 
-double* my_solver(int N, double *A, double* B) {
+double *my_solver(int N, double *A, double* B) {
 	
 	/*   C = B × A × At + Bt × B */
 
