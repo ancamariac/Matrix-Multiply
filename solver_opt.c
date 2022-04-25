@@ -75,12 +75,13 @@ double *upper_X_lower(int N, double *A) {
 		register int iN = i * N;
 		register double *orig_pa = A + iN;
 
-		for (j = 0; j < N; j++) {
+		for (j = i; j < N; j++) {
 
 			register double res = 0.0;
 			register int max = MAX(i, j);
 			register double *pa = orig_pa + max;
 			register double *pb = A + j * N + max;
+			register int jN = j * N;
 
 			for (k = max; k < N; k++) { 
 
@@ -91,6 +92,7 @@ double *upper_X_lower(int N, double *A) {
 			}
 
 			R[iN + j] = res;
+			R[jN + i] = res;
 		}
 	}
 
