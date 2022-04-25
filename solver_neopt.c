@@ -12,14 +12,15 @@
 /* R = A + B */
 double *addition(int N, double *A, double *B) {
 
+	int i = 0, j = 0;
 	double *R = (double*)calloc(N * N, sizeof(double));
 
 	// check memory allocation
 	if (R == NULL)
 		return NULL;
 
-	for (int i = 0; i < N; i++) {
-		for (int j = 0; j < N; j++) {
+	for (i = 0; i < N; i++) {
+		for (j = 0; j < N; j++) {
 			R[i * N + j] += A[i * N + j] + B[i * N + j]; 
 		}
 	}
@@ -27,10 +28,11 @@ double *addition(int N, double *A, double *B) {
 	return R;
 }
 
-double *multiply_matrix(int N, double *A, double *B) {
-    int i, j, k;
+double *multiplication(int N, double *A, double *B) {
 
+    int i = 0, j = 0, k = 0;
     double *result = (double *) calloc(N * N, sizeof(double));
+
 	if (result == NULL) {
 		return NULL;
 	}
@@ -49,68 +51,17 @@ double *multiply_matrix(int N, double *A, double *B) {
 /* R = A * At */
 double *upper_X_lower(int N, double *A) {
 
+	int i = 0, j = 0, k = 0;
 	double *R = (double*)calloc(N * N, sizeof(double));
 
     // check memory allocation
 	if (R == NULL)
 		return NULL;
 
-	for (int i = 0; i < N; i++) {
-		for (int j = 0; j < N; j++) {
-			for (int k = j; k < N; k++) {
+	for (i = 0; i < N; i++) {
+		for (j = 0; j < N; j++) {
+			for (k = j; k < N; k++) {
 				R[i * N + j] += A[i * N + k] * A[j * N + k];
-			}
-		}
-	}
-
-	return R;
-}
-/* UPPER TRIANGULAR MATRIX FUNCTIONS */
-
-double *multiplication_upper(int N, double *A, double *U) {
-
-	double *R = (double*)calloc(N * N, sizeof(double));
-
-	// check memory allocation
-	if (R == NULL)
-		return R;
-
-	for (int i = 0; i < N; i++) {
-		for (int j = 0; j < N; j++) {
-			for (int k = 0; k < j + 1; k++) {
-				R[i * N + j] += A[i * N + k] * U[k * N + j];
-			}
-		}
-	}
-
-	return R;
-}
-
-double *multiplication_lower(int N, double *A, double *L) {
-
-	double *R = (double*)calloc(N * N, sizeof(double));
-
-	// Lt = L transpus
-	double *Lt = (double*)calloc(N * N, sizeof(double));
-
-	if (Lt == NULL)
-		return NULL;
-
-	// transpose for upper tr matrix
-	for (int i = 0; i < N; i++) {
-		for (int j = i; j < N; j++) {
-			Lt[j * N + i] = L[i * N + j];
-		}
-	}
-
-	// check memory allocation
-	if (R == NULL)
-		return R;
-
-	for (int i = 0; i < N; i++) {
-		for (int j = 0; j < N; j++) {
-			for (int k = j; k < N; k++) {
-				R[i * N + j] += A[i * N + k] * Lt[k * N + j];
 			}
 		}
 	}
@@ -120,15 +71,16 @@ double *multiplication_lower(int N, double *A, double *L) {
 
 double *multiplication_with_transpose(int N, double *A) {
 
+	int i = 0, j = 0, k = 0;
 	double *R = (double*)calloc(N * N, sizeof(double));
 
     // check memory allocation
 	if (R == NULL)
 		return NULL;
 
-	for (int i = 0; i < N; i++) {
-		for (int j = 0; j < N; j++) {
-			for (int k = 0; k < N; k++) {
+	for (i = 0; i < N; i++) {
+		for (j = 0; j < N; j++) {
+			for (k = 0; k < N; k++) {
 				R[i * N + j] += A[k * N + i] * A[k * N + j];
 			}
 		}
@@ -148,7 +100,7 @@ double *my_solver(int N, double *A, double* B) {
 		return NULL;
 
 	// R2 = B * R1 -> R2 = B x A x At
-	double *R2 = multiply_matrix(N, B, R1);
+	double *R2 = multiplication(N, B, R1);
 
 	if (R2 == NULL)
 		return NULL;
