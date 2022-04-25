@@ -21,7 +21,9 @@ double *addition(int N, double *A, double *B) {
 	// check memory allocation
 	if (R == NULL)
 		return NULL;
+
 	int N2 = N * N;
+
 	for (i = 0; i < N2; i++) {
 		R[i] = A[i] + B[i];
 	}
@@ -46,11 +48,11 @@ double *multiplication(int N, double *A, double *B) {
 		
 		for (k = 0; k < N; k++) {
 
-			register double *pa = orig_a + k; 
+			register double pa = orig_a[k]; 
 			register double *pb = B + k * N;
 
 			for (j = 0; j < N; j++) {
-				result[j] += *pa * *(pb + j);
+				result[j] += pa * pb[j]);
 			}
 		}
 	}
