@@ -43,13 +43,13 @@ double *multiplication(int N, double *A, double *B) {
 	for (i = 0; i < N; ++i) {
 		register double *orig_pa = A + i * N;
 		for (j = 0; j < N; ++j) {
-			register double *orig_pa_cpy = orig_pa;
-			register double *orig_pb = B + j;
 			register double res = 0.0;
+			register double *pa = orig_pa;
+			register double *pb = B + j;
 			for (k = 0; k < N; ++k) {
-				res += *orig_pa_cpy * *orig_pb;
-				orig_pa_cpy++;
-				orig_pb += N;
+				res += *pa * *pb;
+				pa++;
+				pb += N;
 			}
 			R[i * N + j] = res;
 		}
@@ -71,16 +71,16 @@ double *upper_X_lower(int N, double *A) {
 	for (i = 0; i < N; i++) {
 		register double *orig_pa = A + i * N;
 		for (j = 0; j < N; j++) {
-			register double *orig_pa_cpy = orig_pa + MAX(i, j);
-			register double *orig_pb = A + j * N + MAX(i, j);
 			register double res = 0.0;
+			register int max = MAX(i, j);
+			register double *pa = orig_pa + max;
+			register double *pb = A + j * N + max;
 			for (k = MAX(i, j); k < N; k++) {
-				res += *orig_pa_cpy * *orig_pb;
-				orig_pa_cpy++;
-				orig_pb++;
-				//R[i * N + j] += A[i * N + k] * A[j * N + k];
+				res += *pa * *pb;
+				pa++;
+				pb++;
 			}
-		        R[i * N + j] = res;
+			R[i * N + j] = res;
 		}
 	}
 
@@ -97,10 +97,18 @@ double *multiplication_with_transpose(int N, double *A) {
 		return NULL;
 
 	for (i = 0; i < N; i++) {
+		register double *orig_pa = A + i;
 		for (j = 0; j < N; j++) {
+			register double res = 0.0;
+			register double *pa = orig_pa;
+			register double *pb = A + j;
 			for (k = 0; k < N; k++) {
-				R[i * N + j] += A[k * N + i] * A[k * N + j];
+				res += *pa * *pb;
+				pa += N;
+				pb += N;
+				//R[i * N + j] += A[k * N + i] * A[k * N + j];
 			}
+			R[i * N + j] = res;
 		}
 	}
 
