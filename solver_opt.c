@@ -9,6 +9,9 @@
  */
 /*   C = B × A × At + Bt × B   */
 
+#define MAX(A, B) ((A) > (B) ? (A) : (B))
+
+
 /* R = A + B */
 double *addition(int N, double *A, double *B) {
 
@@ -68,10 +71,10 @@ double *upper_X_lower(int N, double *A) {
 	for (i = 0; i < N; i++) {
 		register double *orig_pa = A + i * N;
 		for (j = 0; j < N; j++) {
-			register double *orig_pa_cpy = orig_pa + j;
-			register double *orig_pb = A + j * N + j;
+			register double *orig_pa_cpy = orig_pa + MAX(i, j);
+			register double *orig_pb = A + j * N + MAX(i, j);
 			register double res = 0.0;
-			for (k = j; k < N; k++) {
+			for (k = MAX(i, j); k < N; k++) {
 				res += *orig_pa_cpy * *orig_pb;
 				orig_pa_cpy++;
 				orig_pb++;
