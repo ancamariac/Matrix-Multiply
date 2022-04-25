@@ -49,11 +49,11 @@ double *multiplication(int N, double *A, double *B) {
 
 		for (k = 0; k < N; k++) {
 
-			register double pa = orig_a[k]; 
+			register double *pa = orig_a + k; 
 			register double *pb = B + k * N;
 
 			for (j = 0; j < N; j++) {
-				result[j] += pa * pb[j];
+				result[j] += *pa * *(pb + j);
 			}
 		}
 	}
@@ -122,7 +122,7 @@ double *multiplication_with_transpose(int N, double *A) {
 				pb += N;
 				//R[i * N + j] += A[k * N + i] * A[k * N + j];
 			}
-			
+
 			R[i * N + j] = res;
 		}
 	}
