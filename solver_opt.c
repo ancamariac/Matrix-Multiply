@@ -21,7 +21,7 @@ double *addition(int N, double *A, double *B) {
 
 	for (i = 0; i < N; i++) {
 		for (j = 0; j < N; j++) {
-			R[i * N + j] = A[i * N + j] + B[i * N + j]; 
+			R[i * N + j] += A[i * N + j] + B[i * N + j]; 
 		}
 	}
 
@@ -42,10 +42,10 @@ double *multiplication(int N, double *A, double *B) {
 		for (j = 0; j < N; ++j) {
 			register double *orig_pa_cpy = orig_pa;
 			register double *orig_pb = B + j;
-			register double res = 0;
+			register double res = 0.0;
 			for (k = 0; k < N; ++k) {
 				res += *orig_pa_cpy * *orig_pb;
-				orig_pa++;
+				orig_pa_cpy++;
 				orig_pb += N;
 			}
 			R[i * N + j] = res;
