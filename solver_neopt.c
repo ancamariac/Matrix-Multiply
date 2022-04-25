@@ -27,8 +27,27 @@ double *addition(int N, double *A, double *B) {
 	return R;
 }
 
-/* R = At * A */
-double *multiplication_with_transpose(int N, double *A) {
+double *multiply_matrix(int N, double *A, double *B) {
+    int i, j, k;
+
+    double *result = (double *) calloc(N * N, sizeof(double));
+	if (result == NULL) {
+		return NULL;
+	}
+
+	for (i = 0; i < N; ++i) {
+		for (j = 0; j < N; ++j) {
+			for (k = 0; k < N; ++k) {
+				result[i * N + j] += A[i * N + k] * B[k * N + j];
+			}
+		}
+	}
+
+	return result;
+}
+
+/* R = A * At */
+double *upper_X_lower(int N, double *A) {
 
 	double *R = (double*)calloc(N * N, sizeof(double));
 
@@ -38,8 +57,8 @@ double *multiplication_with_transpose(int N, double *A) {
 
 	for (int i = 0; i < N; i++) {
 		for (int j = 0; j < N; j++) {
-			for (int k = 0; k < i + 1; k++) {
-				R[i * N + j] += A[i * N + k] * A[k * N + j];
+			for (int k = j; k < N; k++) {
+				R[i * N + j] += A[i * N + k] * A[j * N + k];
 			}
 		}
 	}
@@ -99,18 +118,37 @@ double *multiplication_lower(int N, double *A, double *L) {
 	return R;
 }
 
+double *multiplication_with_transpose(int N, double *A) {
+
+	double *R = (double*)calloc(N * N, sizeof(double));
+
+    // check memory allocation
+	if (R == NULL)
+		return NULL;
+
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < N; j++) {
+			for (int k = 0; k < N; k++) {
+				R[i * N + j] += A[k * N + i] * A[k * N + j];
+			}
+		}
+	}
+
+	return R;
+}
+
 double *my_solver(int N, double *A, double* B) {
 	
 	/*   C = B × A × At + Bt × B */
 
-	// R1 = B x A
-	double *R1 = multiplication_upper(N, B, A);
+	// R1 = A x At
+	double *R1 = upper_X_lower(N, A);
 	
 	if (R1 == NULL)
 		return NULL;
 
-	// R2 = R1 * At -> R2 = B x A x At
-	double *R2 = multiplication_lower(N, R1, A);
+	// R2 = B * R1 -> R2 = B x A x At
+	double *R2 = multiply_matrix(N, B, R1);
 
 	if (R2 == NULL)
 		return NULL;
