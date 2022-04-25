@@ -123,30 +123,35 @@ void printMatrix(int N, double *M) {
 		}
 	}
 */
-double *multiplication(int N, double *A, double *B) {
+double *multiplication(int N, double *A) {
 
 	int i = 0, j = 0, k = 0;
-    double *R = (double *)calloc(N * N, sizeof(double));
-
-	// check memory allocation
-	if (R == NULL) {
+	double *R = (double*)malloc(N * N * sizeof(double));
+	
+    // check memory allocation
+	if (R == NULL)
 		return NULL;
-	}
 
 	for (i = 0; i < N; i++) {
+		register int iN = i * N;
+		register double *orig_pa = A + iN;
 
-		register double *orig_a = A + i * N;
-		register double *result = R + i * N; 
+		for (j = 0; j < N; j++) {
 
-		for (k = 0; k < N; k++) {
+			register double res = 0.0;
+			register int max = MAX(i, j);
+			register double *pa = orig_pa + max;
+			register double *pb = A + j * N + max;
 
-			register double *pa = orig_a + k; 
-			register double *pb = B + k * N;
+			for (k = max; k < N; k++) { 
 
-			for (j = 0; j < N; j++) {
-				result[j] += *pa * *(pb + j);
-				//result+=N;
+				res += *pa * *pb;
+				pa++;
+				pb++;
+
 			}
+
+			R[iN + j] = res;
 		}
 	}
 

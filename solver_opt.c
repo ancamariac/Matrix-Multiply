@@ -16,14 +16,19 @@
 double *addition(int N, double *A, double *B) {
 
 	int i = 0;
-	
+	double *R = (double*)malloc(N * N * sizeof(double));
+
+	// check memory allocation
+	if (R == NULL)
+		return NULL;
+
 	int N2 = N * N;
 	
 	for (i = 0; i < N2; i++) {
-		A[i] += B[i];
+		R[i] = A[i] + B[i];
 	}
 
-	return A;
+	return R;
 }
 
 double *multiplication(int N, double *A, double *B) {
@@ -106,11 +111,12 @@ double *multiplication_with_transpose(int N, double *A) {
 		register double *orig_pa = A + i;
 		register int iN = i * N;
 
-		for (j = 0; j < N; j++) {
+		for (j = i; j < N; j++) {
 
 			register double res = 0.0;
 			register double *pa = orig_pa;
 			register double *pb = A + j;
+			register int jN = j * N;
 
 			for (k = 0; k < N; k++) {
 				res += *pa * *pb;
@@ -120,6 +126,7 @@ double *multiplication_with_transpose(int N, double *A) {
 			}
 			
 			R[iN + j] = res;
+			R[jN + i] = res;
 		}
 	}
 
