@@ -22,8 +22,8 @@ double *addition(int N, double *A, double *B) {
 		register double res = 0;
 		for (int j = 0; j < N; j++) {
 			res += A[i * N + j] + B[i * N + j]; 
+			R[i * N + j] = res;
 		}
-		R[i * N + j] = res;
 	}
 
 	return R;
