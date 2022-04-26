@@ -139,7 +139,7 @@ double *multiplication(int N, double *A) {
 		for (j = 0; j < N; j++) {
 
 			register double res = 0.0;
-			register int max = MAX(i, j);
+			register int max = 1;
 			register double *pa = orig_pa + max;
 			register double *pb = A + j * N + max;
 
@@ -216,11 +216,11 @@ int main() {
 	// At = A transpus
 	double *At = transpose_matrix(3, A);
 
-	double *R1 = multiply_matrix(3, A, At);
+	double *R1 = multiply_matrix(3, B, A);
 	printMatrix(3, R1);
 	printf("\n");
-	double *R2 = multiplication(3, A, At);
-	printMatrix(3, R2);
+	//double *R2 = multiplication(3, A, At);
+	//printMatrix(3, R2);
 	//if (R1 == NULL)
 	//	return NULL;
 

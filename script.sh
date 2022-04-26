@@ -1,2 +1,2 @@
 #!/bin/sh
-./tema2_neopt input
+./tema2_blas input
