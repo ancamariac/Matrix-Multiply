@@ -1,0 +1,7 @@
+Run=./tema2_opt_m: N=400: Time=0.418461
+Run=./tema2_opt_m: N=600: Time=1.898595
+Run=./tema2_opt_m: N=800: Time=3.999158
+Run=./tema2_opt_m: N=1000: Time=6.214785
+Run=./tema2_opt_m: N=1200: Time=11.835397
+Run=./tema2_opt_m: N=1400: Time=18.817457
+<<< Bonus=0p >>>

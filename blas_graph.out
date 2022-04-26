@@ -1,0 +1,6 @@
+Run=./tema2_blas: N=400: Time=0.038148
+Run=./tema2_blas: N=600: Time=0.125491
+Run=./tema2_blas: N=800: Time=0.279116
+Run=./tema2_blas: N=1000: Time=0.547168
+Run=./tema2_blas: N=1200: Time=0.917484
+Run=./tema2_blas: N=1400: Time=1.419558
