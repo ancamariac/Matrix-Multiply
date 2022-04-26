@@ -2,15 +2,15 @@
  * Tema 2 ASC
  * 2022 Spring
  */
+
 #include "utils.h"
+
+#define MAX(A, B) ((A) > (B) ? (A) : (B))
 
 /*
  * Add your optimized implementation here
  */
 /*   C = B × A × At + Bt × B   */
-
-#define MAX(A, B) ((A) > (B) ? (A) : (B))
-
 
 /* R = A + B */
 double *addition(int N, double *A, double *B) {
@@ -124,7 +124,6 @@ double *multiplication_with_transpose(int N, double *A) {
 				res += *pa * *pb;
 				pa += N;
 				pb += N;
-				//R[i * N + j] += A[k * N + i] * A[k * N + j];
 			}
 			
 			R[iN + j] = res;

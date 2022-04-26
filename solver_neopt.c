@@ -4,12 +4,12 @@
  */
 #include "utils.h"
 
+#define MAX(A, B) ((A) > (B) ? (A) : (B))
+
 /*
  * Add your unoptimized implementation here
  */
 /*   C = B × A × At + Bt × B   */
-
-#define MAX(A, B) ((A) > (B) ? (A) : (B))
 
 /* R = A + B */
 double *addition(int N, double *A, double *B) {
