@@ -1,0 +1,30 @@
+==2628477== Cachegrind, a cache and branch-prediction profiler
+==2628477== Copyright (C) 2002-2017, and GNU GPL'd, by Nicholas Nethercote et al.
+==2628477== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==2628477== Command: ./tema2_opt_m input_valgrind
+==2628477== 
+--2628477-- warning: L3 cache found, using its data for the LL simulation.
+--2628477-- warning: specified LL cache: line_size 64  assoc 16  total_size 12,582,912
+--2628477-- warning: simulated LL cache: line_size 64  assoc 24  total_size 12,582,912
+Run=./tema2_opt_m: N=400: Time=12.883058
+<<< Bonus=0p >>>
+==2628477== 
+==2628477== I   refs:      2,146,872,507
+==2628477== I1  misses:            1,627
+==2628477== LLi misses:            1,548
+==2628477== I1  miss rate:          0.00%
+==2628477== LLi miss rate:          0.00%
+==2628477== 
+==2628477== D   refs:        933,852,263  (866,787,276 rd   + 67,064,987 wr)
+==2628477== D1  misses:       73,288,717  ( 72,969,333 rd   +    319,384 wr)
+==2628477== LLd misses:          113,276  (     22,184 rd   +     91,092 wr)
+==2628477== D1  miss rate:           7.8% (        8.4%     +        0.5%  )
+==2628477== LLd miss rate:           0.0% (        0.0%     +        0.1%  )
+==2628477== 
+==2628477== LL refs:          73,290,344  ( 72,970,960 rd   +    319,384 wr)
+==2628477== LL misses:           114,824  (     23,732 rd   +     91,092 wr)
+==2628477== LL miss rate:            0.0% (        0.0%     +        0.1%  )
+==2628477== 
+==2628477== Branches:        110,581,534  (110,340,845 cond +    240,689 ind)
+==2628477== Mispredicts:         344,245  (    343,996 cond +        249 ind)
+==2628477== Mispred rate:            0.3% (        0.3%     +        0.1%   )
