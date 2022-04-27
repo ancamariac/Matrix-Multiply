@@ -55,6 +55,15 @@ Run=./tema2_blas: N=400: Time=0.038164 <br>
 Run=./tema2_blas: N=800: Time=0.279452 <br>
 Run=./tema2_blas: N=1200: Time=0.917279 <br>
 
+Cachegrind
+-
+Din analiza output-ului generat de cachegrind se observa faptul ca:
+- varianta neoptimizara are cea mai mare valoare a lui I ref, reprezentand numarul de instructiuni executate, blas, avand cea mai mica valoare. Asadar, spre exemplu, putem aminti aici faptul ca pentru solver_opt.c, operatiile ce contineau constante au fost stocate independent de bucla din care faceau parte initial, tocmai pentru ca acea operatie sa nu se efectueze de fiecare data. 
+> **addition**: int N2 = N * N => parcurgere pana la N2 in loc de N*N
+> 
+- analizand D refs, scrierile si citirile din memorie, se observa acelasi clasament, datorita utilizarii lui register, in opt_m.
+- in ceea ce priveste conditional & indirect branches, versiunea optimizata inregistreaza o performanta mai buna, datorita folosirii configuratiei ikj
+
 Analiza comparativa a rezultatelor
 -
 ![Comparatie](/grafice/comparatie.png "Analiza comparativa")
