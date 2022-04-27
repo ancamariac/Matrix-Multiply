@@ -29,9 +29,9 @@ Versiunea **neoptimizata** a acestei probleme este compusa din implementarea urm
 
 Timpii de executie pentru input:
 >
-Run=./tema2_neopt: N=400: Time=1.383853
-Run=./tema2_neopt: N=800: Time=12.115036
-Run=./tema2_neopt: N=1200: Time=41.016384
+Run=./tema2_neopt: N=400: Time=1.383853 <br>
+Run=./tema2_neopt: N=800: Time=12.115036 <br>
+Run=./tema2_neopt: N=1200: Time=41.016384 <br>
  
 Versiunea **optimizata** a problemei se refera la utilizarea acelorasi metode descrise mai sus, complexitatea fiind aceeasi pentru fiecare operatie. Diferenta intervine la abordarea urmatoarelor tehnici:
 - folosirea keyword-ului "register" pentru stocarea constantelor, astfel ca acestea sunt accesate mai repede dintr-un registru
@@ -41,9 +41,9 @@ Versiunea **optimizata** a problemei se refera la utilizarea acelorasi metode de
   
 Timpii de executie pentru input:
 >
-Run=./tema2_opt_m: N=400: Time=0.418594
-Run=./tema2_opt_m: N=800: Time=3.986610
-Run=./tema2_opt_m: N=1200: Time=11.850770
+Run=./tema2_opt_m: N=400: Time=0.418594 <br>
+Run=./tema2_opt_m: N=800: Time=3.986610 <br>
+Run=./tema2_opt_m: N=1200: Time=11.850770 <br>
 
 Versiunea **blas** se refera la utilizarea metodelor deja implementate din biblioteca BLAS Atlas astfel:
 - s-a tinut cont de faptul ca matricea A este o matrice superior triunghiulara, folosind functia *cblas_dtrmm* cu valoarea *CblasUpper* pentru inmultirea cu A
@@ -51,9 +51,9 @@ Versiunea **blas** se refera la utilizarea metodelor deja implementate din bibli
 
 Timpii de executie pentru input:
 >
-Run=./tema2_blas: N=400: Time=0.038164
-Run=./tema2_blas: N=800: Time=0.279452
-Run=./tema2_blas: N=1200: Time=0.917279
+Run=./tema2_blas: N=400: Time=0.038164 <br>
+Run=./tema2_blas: N=800: Time=0.279452 <br>
+Run=./tema2_blas: N=1200: Time=0.917279 <br>
 
 Analiza comparativa a rezultatelor
 -
