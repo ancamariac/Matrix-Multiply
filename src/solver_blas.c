@@ -27,7 +27,7 @@ double* my_solver(int N, double *A, double *B) {
 
 	/*   C = B × A × At + Bt × B */
 
-	// R = B x A DxC
+	// R = B x A 
 	cblas_dtrmm(CblasRowMajor, CblasRight, CblasUpper, CblasNoTrans, CblasNonUnit,
 		N, N, 1, A, N, R, N);
 
